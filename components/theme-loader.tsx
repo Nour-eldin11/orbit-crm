@@ -1,0 +1,3 @@
+'use client';
+import {useEffect} from 'react';
+export default function ThemeLoader(){useEffect(()=>{let theme='light';let accent='violet';let language='en';try{const pref=JSON.parse(localStorage.getItem('orbit-preferences')||'{}');theme=pref.theme||'light';accent=pref.accent||'violet';language=pref.language||'en'}catch{}const media=window.matchMedia('(prefers-color-scheme: dark)');document.documentElement.setAttribute('data-theme',theme==='system'?(media.matches?'dark':'light'):theme);document.documentElement.setAttribute('data-accent',accent);document.documentElement.setAttribute('lang',language);document.documentElement.setAttribute('dir',language==='ar'?'rtl':'ltr')},[]);return null}
