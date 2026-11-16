@@ -127,3 +127,49 @@
   scrollbar-width:thin;
   scrollbar-color:#cfc4df transparent;
 }
+
+/* Improve reading size while preserving the existing heading scale. */
+.nav-item,.profile small,.workspace-switch strong,.page-heading p,.panel-heading p,
+.stat-title,.stat-foot,.activity p,.activity small,.task-row strong,.task-row small,
+.customer-toolbar p,.customer-controls input,.customer-controls select,.customer-table td,
+.customer-table th,.detail-card dt,.detail-card dd,.customer-timeline p,
+.deal-card-company,.deal-customer,.deal-close,.deal-stage-label,.task-date,
+.task-title-cell strong,.task-title-cell small,.preference-caption p,.preference-toggle-row p,
+.profile-fields label,.auto-save-note,.calendar-agenda p,.board-hint,.secondary,.primary{
+  font-size:13px;
+  line-height:1.45;
+}
+.nav-label,.eyebrow,.customer-timeline time,.pagination,.task-list-footer{font-size:11px}
+.customer-id{font-size:12px;white-space:nowrap;font-weight:600;letter-spacing:.02em;color:var(--accent)}
+
+/* Date and other filters share the search field's baseline on wide screens. */
+.tasks-view .customer-toolbar{align-items:stretch;flex-direction:column;gap:17px}
+.task-filters{display:flex;align-items:center;flex-wrap:wrap;width:100%}
+.task-filters .customer-search{flex:1 1 240px}
+.task-filters .filter-date{display:flex;flex-direction:row;align-items:center;gap:8px;white-space:nowrap;font-size:12px}
+.task-filters :is(select,input,.secondary){min-height:38px}
+.task-filters .filter-date input{max-width:none}
+@media(max-width:700px){.task-filters .customer-search{flex-basis:100%}}
+
+/* Always expose an obvious horizontal scrollbar and physical direction controls. */
+.horizontal-scroll{min-width:0}
+.horizontal-scroll-actions{display:flex;align-items:center;justify-content:flex-end;gap:5px;padding:7px 13px;color:var(--muted);font-size:11px}
+.horizontal-scroll-actions:not(:has(button:not(:disabled))){display:none}
+.horizontal-scroll-actions button{display:grid;place-items:center;width:30px;height:30px;border:1px solid var(--border);border-radius:6px;background:var(--bg);color:var(--accent)}
+.horizontal-scroll-viewport{max-width:100%;overflow-x:auto;scrollbar-width:auto;scrollbar-color:var(--accent) var(--accent-soft)}
+.horizontal-scroll-viewport:focus-visible{outline:2px solid var(--accent);outline-offset:-2px}
+.horizontal-scroll-viewport::-webkit-scrollbar{height:12px}
+.horizontal-scroll-viewport::-webkit-scrollbar-track{background:var(--accent-soft);border-radius:10px}
+.horizontal-scroll-viewport::-webkit-scrollbar-thumb{background:var(--accent);border:2px solid var(--accent-soft);border-radius:10px}
+
+/* A cool blue alternative to the original warm dark palette. */
+.theme-options{grid-template-columns:repeat(4,minmax(0,1fr))}
+.theme-preview-ocean{background:#162a3c}
+.theme-preview-ocean i{background:#27b7cd}
+[data-palette=ocean]{--ink:#e8f4f8;--muted:#adc2d2;--border:#345166;--bg:#0d1b29;--accent:#42c8d7;--accent-soft:#174154;color-scheme:dark}
+[data-palette=ocean] body{background:var(--bg);color:var(--ink)}
+[data-palette=ocean] :is(.sidebar,.topbar,.panel,.modal,.notification-panel,.login-form-area){background-color:#172c3d;border-color:var(--border)}
+[data-palette=ocean] :is(.workspace-switch,.goal-card,.demo-note,.kanban-column,.deal-card,.theme-option){background-color:#20394c;border-color:var(--border)}
+[data-palette=ocean] :is(input,select,textarea,.secondary,.customer-search,.profile-fields input,.modal input,.modal select,.panel select){background-color:#20394c;color:var(--ink);border-color:var(--border)}
+[data-palette=ocean] :is(.brand,.page-heading h1,.panel h2,.stat-main strong,.revenue-total,.pipeline-total,.settings-intro h2,.task-summary strong,.profile-fields label,.preference-toggle-row strong){color:#ecf7fc}
+@media(max-width:700px){.theme-options{grid-template-columns:repeat(2,minmax(0,1fr))}}

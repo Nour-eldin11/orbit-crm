@@ -1,5 +1,5 @@
 'use client';
-import {forwardRef,InputHTMLAttributes,ButtonHTMLAttributes,ReactNode,SelectHTMLAttributes,useEffect,useRef} from 'react';
+import {forwardRef,InputHTMLAttributes,ButtonHTMLAttributes,ReactNode,SelectHTMLAttributes,useEffect,useRef,useState} from 'react';
 import {Search,X,ChevronLeft,ChevronRight,ArrowUpRight,type LucideIcon} from 'lucide-react';
 export const Button=forwardRef<HTMLButtonElement,ButtonHTMLAttributes<HTMLButtonElement>&{variant?:'primary'|'secondary'|'text'}>(function Button({variant='secondary',className='',...props},ref){return <button ref={ref} className={`inline-flex items-center justify-center gap-2 transition-colors focus-visible:outline-2 focus-visible:outline-offset-2 ${variant==='text'?'text-button':variant} ${className}`} {...props}/>});
 export const Input=forwardRef<HTMLInputElement,InputHTMLAttributes<HTMLInputElement>>(function Input({className='',...props},ref){return <input ref={ref} className={`ui-input w-full outline-none transition-colors ${className}`} {...props}/>});
@@ -12,7 +12,27 @@ export function SummaryCard({label,value,change,footnote,icon:Icon,points,index=
   </article>
 }
 export function Badge({children,tone='neutral'}:{children:ReactNode;tone?:string}){return <span className={`ui-badge inline-flex items-center rounded-full ui-badge-${tone.toLowerCase().replaceAll(' ','-')}`}>{children}</span>}
-export function DataTable({children,className=''}:{children:ReactNode;className?:string}){return <div className={`table-scroll w-full overflow-x-auto ${className}`}>{children}</div>}
+export function HorizontalScroll({children,className='',label='Horizontal content'}:{children:ReactNode;className?:string;label?:string}){
+  const viewport=useRef<HTMLDivElement>(null);
+  const [edges,setEdges]=useState({left:false,right:false});
+  useEffect(()=>{
+    const el=viewport.current;if(!el)return;
+    const update=()=>{
+      const max=Math.max(0,el.scrollWidth-el.clientWidth);
+      const rtl=getComputedStyle(el).direction==='rtl';
+      const x=el.scrollLeft;
+      setEdges(rtl?{left:x>-max+2,right:x< -2}:{left:x>2,right:x<max-2});
+    };
+    const observer=new ResizeObserver(update);
+    observer.observe(el);
+    if(el.firstElementChild)observer.observe(el.firstElementChild);
+    el.addEventListener('scroll',update,{passive:true});window.addEventListener('resize',update);
+    update();
+    return()=>{observer.disconnect();el.removeEventListener('scroll',update);window.removeEventListener('resize',update)};
+  },[children]);
+  return <div className="horizontal-scroll"><div className="horizontal-scroll-actions" aria-label={label+' controls'}><span>Scroll to explore</span><button type="button" aria-label={'Scroll '+label+' left'} disabled={!edges.left} onClick={()=>viewport.current?.scrollBy({left:-320,behavior:'smooth'})}><ChevronLeft size={17}/></button><button type="button" aria-label={'Scroll '+label+' right'} disabled={!edges.right} onClick={()=>viewport.current?.scrollBy({left:320,behavior:'smooth'})}><ChevronRight size={17}/></button></div><div ref={viewport} tabIndex={0} role="region" aria-label={label} className={`horizontal-scroll-viewport ${className}`}>{children}</div></div>;
+}
+export function DataTable({children,className=''}:{children:ReactNode;className?:string}){return <HorizontalScroll className={`table-scroll w-full overflow-x-auto ${className}`} label="data table">{children}</HorizontalScroll>}
 export function Dropdown({children,...props}:SelectHTMLAttributes<HTMLSelectElement>){return <select className="ui-dropdown" {...props}>{children}</select>}
 export function SearchBar({value,onChange,placeholder='Search…',label='Search'}:{value:string;onChange:(v:string)=>void;placeholder?:string;label?:string}){return <label className="customer-search flex items-center gap-2"><Search size={16}/><Input aria-label={label} placeholder={placeholder} value={value} onChange={e=>onChange(e.target.value)}/></label>}
 export function Pagination({page,pages,total,size,onPageChange,onSizeChange}:{page:number;pages:number;total:number;size:number;onPageChange:(p:number)=>void;onSizeChange:(s:number)=>void}){return <div className="pagination"><span>{total?`${(page-1)*size+1}–${Math.min(page*size,total)}`:'0'} of {total} customers</span><label>Rows <Dropdown aria-label="Customers per page" value={size} onChange={e=>onSizeChange(Number(e.target.value))}><option value={6}>6</option><option value={12}>12</option></Dropdown></label><div className="page-buttons"><Button aria-label="Previous customer page" disabled={page===1} onClick={()=>onPageChange(page-1)}><ChevronLeft size={16}/></Button>{Array.from({length:pages},(_,i)=><Button key={i} className={page===i+1?'current-page':''} aria-label={'Customer page '+(i+1)} aria-current={page===i+1?'page':undefined} onClick={()=>onPageChange(i+1)}>{i+1}</Button>)}<Button aria-label="Next customer page" disabled={page===pages} onClick={()=>onPageChange(page+1)}><ChevronRight size={16}/></Button></div></div>}
