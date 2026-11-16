@@ -43,7 +43,7 @@ export function Sidebar({active, children, open = false, onClose, language = 'en
       <div className="sidebar-bottom">
         {children}
         <button type="button" className={`nav-item ${active === 'Settings' ? 'active' : ''}`} onClick={() => {onClose?.(); router.push('/settings/')}}><Settings size={18}/>{labels[language].Settings}</button>
-        <a className="nav-item" href="/login/" onClick={() => sessionStorage.removeItem('orbit-session')}><LogOut size={18}/>Sign out</a>
+        <button type="button" className="nav-item" onClick={async()=>{await fetch('/api/logout',{method:'POST'});router.replace('/login/');router.refresh()}}><LogOut size={18}/>Sign out</button>
       </div>
     </aside>
   </>;
