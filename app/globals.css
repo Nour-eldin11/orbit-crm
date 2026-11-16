@@ -119,3 +119,11 @@
   .ambient-track,.sidebar,.topbar,.stat-card,.content>.panel,.content>.calendar-panel,.extra-chart,.task-summary,.kanban-column,.revenue-chart path:last-child,.segmented-bar i{animation:none!important}
   .revenue-chart path:last-child{stroke-dasharray:none;stroke-dashoffset:0}
 }
+
+/* Keep the entire navigation accessible when the viewport is shorter than its contents. */
+.sidebar{
+  overflow-y:auto;
+  overscroll-behavior-y:contain;
+  scrollbar-width:thin;
+  scrollbar-color:#cfc4df transparent;
+}
