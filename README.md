@@ -40,11 +40,13 @@ The Customers section includes 12 mock records, combined search/status/industry 
 
 The calendar shows task due dates and deal closing dates with a selected-day agenda. Settings persist the profile, notification preferences, light/dark/system theme, four accent colors and English/Arabic interface preference in the browser. Arabic uses right-to-left layout and translated primary navigation and feature labels; mock record content remains in English. All data stays in this browser. This is a frontend demonstration with no backend.
 
+## Live demo
+
+[Open Orbit CRM on Vercel](https://orbit-crm-two-omega.vercel.app/)
+
 ## Screenshot
 
 ![Responsive login screen](docs/screenshots/login-desktop.jpg)
-
-The owner-only preview is available at [Orbit CRM](https://orbit-crm-workspace-a9n.ahmedsamir83.chatgpt.site).
 
 ## Component architecture
 
