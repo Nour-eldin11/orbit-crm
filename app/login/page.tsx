@@ -11,9 +11,10 @@ export default function Login() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [showPassword, setShowPassword] = useState(false);
-  const [errors, setErrors] = useState<{email?: string; password?: string}>({});
+  const [errors, setErrors] = useState<{email?: string; password?: string; form?: string}>({});
+  const [submitting, setSubmitting] = useState(false);
 
-  function signIn(event: FormEvent<HTMLFormElement>) {
+  async function signIn(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
     const nextErrors: typeof errors = {};
     if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email.trim())) {
@@ -24,8 +25,13 @@ export default function Login() {
     }
     setErrors(nextErrors);
     if (Object.keys(nextErrors).length) return;
-    sessionStorage.setItem('orbit-session', email.trim());
-    router.push('/dashboard/');
+    setSubmitting(true);
+    try {
+      const response=await fetch('/api/login',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({email:email.trim(),password})});
+      if(!response.ok){setErrors({form:response.status===503?'Admin sign-in is being configured. Please try again later.':'Email or password is incorrect.'});return}
+      router.replace('/dashboard/');router.refresh();
+    } catch {setErrors({form:'Could not sign in. Check your connection and try again.'})}
+    finally{setSubmitting(false)}
   }
 
   return <main className="login-page">
@@ -72,8 +78,9 @@ export default function Login() {
           </Button>
         </div>
         {errors.password && <p id="password-error" className="form-error" role="alert">{errors.password}</p>}
-        <Button type="submit" variant="primary" className="login-submit">Sign in to Orbit <ArrowRight size={17}/></Button>
-        <div className="demo-note"><strong>A workspace to explore</strong><br/>This is a frontend demo. Use any valid email and a password of at least 8 characters. No account is created.</div>
+        {errors.form&&<p className="form-error" role="alert">{errors.form}</p>}
+        <Button type="submit" variant="primary" className="login-submit" disabled={submitting}>{submitting?'Signing in…':'Sign in to Orbit'} <ArrowRight size={17}/></Button>
+        <div className="demo-note"><strong>Admin access</strong><br/>Sign in with your dedicated Orbit admin email and password.</div>
       </form>
       <small className="login-footer">One workspace. Every relationship.</small>
     </section>

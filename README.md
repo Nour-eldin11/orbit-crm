@@ -9,7 +9,7 @@ npm install
 npm run dev
 ```
 
-Open http://localhost:3000. `npm run build` creates a static export in `out/`.
+Create `.env.local` from `.env.example` and choose a unique admin email, a long password, and a random session secret (at least 32 characters). Generate a secret with `node -e "console.log(require('node:crypto').randomBytes(32).toString('hex'))"`. Do not commit `.env.local`. Open http://localhost:3000.
 
 ## Routes
 
@@ -24,29 +24,27 @@ Open http://localhost:3000. `npm run build` creates a static export in `out/`.
 - `/reports/`: additional charts
 - `/calendar/`: task and deal calendar
 
-Use any valid email and a password of eight or more characters. This simulated sign-in does not provide real authentication or server-side security. No passwords are stored or transmitted by the app.
+The dedicated admin credentials are checked by a server route. Protected pages require a signed HttpOnly cookie. Passwords and the signing secret are stored only in server environment variables. Without all three variables, login fails closed.
 
 ## Features
 
 Responsive navigation, summary cards, monthly revenue chart toggle, additional pipeline and closing charts, recent activities, persistent local tasks, create-deal and task dialogs, CSV export, notification panel, and browser-data reset. The command palette and global search open from the header or with Ctrl/⌘ K. An onboarding tour opens on first use and can be replayed from the sidebar.
 
-Mock seed data lives in `lib/data.ts`. New deals and tasks persist in localStorage. Summary revenue, historical trends, customer totals and pipeline distribution are illustrative fixtures, not live aggregates. The dashboard redirects to login when no demo session exists. Signing out clears the session.
+Mock seed data lives in `lib/data.ts`. New deals and tasks persist in localStorage. Summary revenue, historical trends, customer totals and pipeline distribution are illustrative fixtures, not live aggregates. Protected routes redirect to login without a valid admin session. Signing out clears the cookie.
 
 ## Customers and pipeline
 
-The Customers section includes 12 mock records, combined search/status/industry filtering, name/company/status sorting, pagination, and detail views with company data, activity history, associated deals, and editable browser-persisted notes. The Deals section provides Lead, Contacted, Proposal, Negotiation, Won and Lost columns. Cards show customer, value and closing date; drag and drop or a stage selector moves a deal and persists the change. Value and closing-date filters narrow the board. Tasks can be filtered by status, priority, due date and search. Customer links open the corresponding details. Existing local deals are retained, and legacy Qualified deals migrate to Contacted. Customer and active-deal counts and pipeline values reflect the current data; historical revenue remains illustrative.
+The Customers section includes 12 mock records with permanent display IDs, combined search/status/industry filtering, name/company/status sorting, pagination, and detail views with company data, activity history, associated deals, and editable browser-persisted notes. The Deals section provides Lead, Contacted, Proposal, Negotiation, Won and Lost columns. Cards show customer, value and closing date; drag and drop or a stage selector moves a deal and persists the change. Value and closing-date filters narrow the board. Tasks can be filtered by status, priority, due date and search. Customer links open the corresponding details. Existing local deals are retained, and legacy Qualified deals migrate to Contacted. Customer and active-deal counts and pipeline values reflect the current data; historical revenue remains illustrative.
 
 ## Calendar and preferences
 
 The calendar shows task due dates and deal closing dates with a selected-day agenda. Settings persist the profile, notification preferences, light/dark/system theme, four accent colors and English/Arabic interface preference in the browser. Arabic uses right-to-left layout and translated primary navigation and feature labels; mock record content remains in English. All data stays in this browser. This is a frontend demonstration with no backend.
 
-## Live demo
-
-[Open Orbit CRM on Vercel](https://orbit-crm-two-omega.vercel.app/)
-
 ## Screenshot
 
 ![Responsive login screen](docs/screenshots/login-desktop.jpg)
+
+The owner-only preview is available at [Orbit CRM](https://orbit-crm-workspace-a9n.ahmedsamir83.chatgpt.site).
 
 ## Component architecture
 
@@ -59,7 +57,7 @@ The calendar shows task due dates and deal closing dates with a selected-day age
 
 ## Deployment
 
-The project is a static Next.js export: `npm run build` writes `out/`. Import the repository into Vercel as a Next.js project and deploy with the default build command. If Vercel asks for an output directory, use `out`. Client-side routes are prerendered at build time. There is no backend or production authentication; any valid email and eight-character password opens the demo.
+The application uses Next.js server routes and middleware for admin login. In Vercel Project Settings → Environment Variables, set `ORBIT_ADMIN_EMAIL`, `ORBIT_ADMIN_PASSWORD`, and `ORBIT_SESSION_SECRET` for Production, then redeploy. Use the Next.js preset and default build/output settings; do not set an `out` directory. The sample customer records and client-side state remain demo data, not a multi-user backend. Anyone with access to the source can see the mock data bundled in the client; do not use real customer information. Customer IDs are read-only in the interface, not database-enforced identifiers.
 
 ## Verification
 
