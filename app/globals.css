@@ -173,3 +173,56 @@
 [data-palette=ocean] :is(input,select,textarea,.secondary,.customer-search,.profile-fields input,.modal input,.modal select,.panel select){background-color:#20394c;color:var(--ink);border-color:var(--border)}
 [data-palette=ocean] :is(.brand,.page-heading h1,.panel h2,.stat-main strong,.revenue-total,.pipeline-total,.settings-intro h2,.task-summary strong,.profile-fields label,.preference-toggle-row strong){color:#ecf7fc}
 @media(max-width:700px){.theme-options{grid-template-columns:repeat(2,minmax(0,1fr))}}
+
+.subscriptions-view{max-width:1200px;margin:0 auto 40px}
+.subscriptions-intro{text-align:center;margin:20px auto 26px;max-width:610px}
+.subscriptions-intro h2{font-size:29px;letter-spacing:-.04em;margin:12px 0}
+.subscriptions-intro p{font-size:13px;color:var(--muted);line-height:1.6}
+.billing-switch{display:flex;align-items:center;justify-content:center;gap:4px;width:max-content;margin:0 auto 26px;padding:5px;border:1px solid var(--border);border-radius:11px;background:var(--bg)}
+.billing-switch button{padding:10px 14px;border-radius:7px;font-weight:600;font-size:12px}
+.billing-switch button[aria-pressed=true]{background:var(--accent);color:#fff}
+.billing-switch span{font-size:10px;margin-left:5px;opacity:.82}
+.subscription-plans{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:18px}
+.subscription-plan{padding:26px;position:relative;min-width:0;overflow:hidden}
+.subscription-plan.recommended{border:2px solid var(--accent);padding:25px;box-shadow:0 14px 36px color-mix(in srgb,var(--accent) 13%,transparent)}
+.plan-ribbon{position:absolute;top:0;right:0;display:flex;gap:5px;align-items:center;background:var(--accent);color:#fff;font-size:11px;padding:6px 11px;border-radius:0 0 0 8px}
+.subscription-plan h3{font-size:18px;margin:3px 0 8px}
+.subscription-plan>p{font-size:12px;line-height:1.6;min-height:40px;color:var(--muted)}
+.plan-price{margin:24px 0 20px}.plan-price strong{font-size:38px;letter-spacing:-.05em}.plan-price span{font-size:12px;color:var(--muted);margin-left:4px}
+.plan-action{width:100%;min-height:42px}.plan-divider{height:1px;background:var(--border);margin:24px 0}
+.plan-features-title{display:block;font-size:12px;margin-bottom:12px}
+.subscription-plan ul{list-style:none;padding:0;margin:0 0 25px;display:grid;gap:12px}
+.subscription-plan li,.subscription-plan small{display:flex;align-items:center;gap:9px;font-size:12px;line-height:1.4}
+.subscription-plan li svg,.subscription-plan small svg{color:var(--accent);flex:none}
+.subscription-plan small{color:var(--muted);padding-top:17px;border-top:1px solid var(--border)}
+.subscription-disclaimer{text-align:center;font-size:11px;color:var(--muted);margin:23px 0}
+.subscription-error{color:#b54152;text-align:center}
+@media(max-width:900px){.subscription-plans{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(max-width:620px){.subscription-plans{grid-template-columns:1fr}.subscription-plan>p{min-height:0}}
+
+.subscription-public-page{min-height:100vh;background:var(--bg);color:var(--ink);background-image:radial-gradient(circle at 50% -10%,color-mix(in srgb,var(--accent) 17%,transparent),transparent 45%)}
+.subscription-public-shell{max-width:1260px;margin:auto;padding:24px clamp(18px,4vw,56px) 40px}
+.subscription-public-header{display:flex;justify-content:space-between;align-items:center;gap:16px;padding:12px 0 32px}
+.subscription-public-header>div{display:flex;gap:20px;align-items:center}
+.subscription-public-header>div a,.subscription-public-header>div button{display:inline-flex;gap:6px;align-items:center;color:var(--muted);font-size:14px}
+.subscription-public-header>div :hover{color:var(--accent)}
+.subscription-public-page .subscriptions-intro{margin-top:40px}
+.subscription-public-page .subscriptions-intro h2{font-size:clamp(29px,4vw,45px)}
+.subscription-public-page .subscriptions-intro p,.subscription-public-page .subscription-plan>p{font-size:16px}
+.subscription-public-page .subscription-plan li,.subscription-public-page .subscription-plan small,.subscription-public-page .subscription-disclaimer{font-size:14px}
+.subscription-account-banner{display:flex;gap:10px;align-items:center;border:1px solid var(--border);border-radius:12px;padding:15px 18px;background:#fff;font-size:14px}
+[data-theme=dark] .subscription-account-banner{background:#281f30}
+.subscription-account-banner svg{color:var(--accent)}
+.subscription-signup{max-width:510px;margin:32px auto;padding:28px}
+.subscription-signup h2{font-size:24px;margin:10px 0}
+.subscription-signup p{color:var(--muted);font-size:15px;line-height:1.5}
+.subscription-signup form{display:grid;gap:15px;margin-top:20px}
+.subscription-signup label{display:grid;gap:6px;font-size:14px;font-weight:600}
+.subscription-signup input{width:100%;height:44px;border:1px solid var(--border);border-radius:8px;padding:10px 12px;background:var(--bg);color:var(--ink);font-size:16px}
+.subscription-signup form>.primary{justify-content:center;min-height:44px}
+.subscription-signup .auth-switch{display:flex;gap:7px;padding:4px;background:var(--bg);border-radius:9px}
+.subscription-signup .auth-switch button{flex:1;padding:9px;border-radius:6px;font-size:14px}
+.subscription-signup .auth-switch button[aria-pressed=true]{background:var(--accent);color:#fff}
+.subscription-signup .subscription-success{color:#12805d}
+.subscription-public-footer{text-align:center;margin:50px 0 10px;color:var(--muted);font-size:13px}
+@media(max-width:600px){.subscription-public-header{align-items:flex-start}.subscription-public-header>div{display:grid;gap:8px}}

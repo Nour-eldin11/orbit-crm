@@ -1,6 +1,6 @@
 'use client';
 
-import {Orbit, LayoutDashboard, Users, Handshake, CheckSquare, BarChart3, CalendarDays} from 'lucide-react';
+import {Orbit, LayoutDashboard, Users, Handshake, CheckSquare, BarChart3, CalendarDays, CreditCard} from 'lucide-react';
 import {Language, labels} from './bonus-features';
 
 const navigation = [
@@ -10,6 +10,7 @@ const navigation = [
   {name: 'Tasks', icon: CheckSquare},
   {name: 'Reports', icon: BarChart3},
   {name: 'Calendar', icon: CalendarDays},
+  {name: 'Subscriptions', icon: CreditCard},
 ] as const;
 
 export type WorkspacePage = (typeof navigation)[number]['name'];
