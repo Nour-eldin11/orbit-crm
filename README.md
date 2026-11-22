@@ -49,7 +49,7 @@ The owner-only preview is available at [Orbit CRM](https://orbit-crm-workspace-a
 ## Component architecture
 
 - `app/` contains independent App Router pages and the static customer detail route.
-- `components/dashboard-shell.tsx` checks the simulated browser session before mounting the workspace.
+- `middleware.ts` checks the signed admin session before serving dashboard routes; `components/dashboard-shell.tsx` mounts the workspace.
 - `components/workspace.tsx` coordinates page state and shared chrome; feature views live in dedicated components such as `customer-views.tsx`, `deals-board.tsx`, `tasks-view.tsx`, `settings-view.tsx`, and `bonus-features.tsx`.
 - `components/ui/index.tsx` exports reusable buttons, inputs, cards, tables, badges, modal, dropdown, search bar, pagination, empty state and loading skeleton.
 - `lib/` holds typed mock customers, deals, tasks and preferences.
@@ -62,7 +62,8 @@ The application uses Next.js server routes and middleware for admin login. In Ve
 ## Verification
 
 Run `npm run typecheck` and `npm run build`. The build generates all core routes, the bonus routes, and twelve customer detail pages. Check desktop, tablet and phone widths in a browser.
-# SaaS subscriptions (setup in progress)
+
+## SaaS subscriptions (setup in progress)
 
 The public `/subscriptions` page lets a customer compare Starter, Pro and Business, switch between monthly and yearly preview prices, create an account, and save a plan preference to an isolated workspace. It does not collect payment or activate paid features. The existing admin dashboard still uses sample CRM records and browser storage; plan selection alone does not convert that dashboard into a multi-tenant product.
 
