@@ -80,7 +80,7 @@ export default function Login() {
         {errors.password && <p id="password-error" className="form-error" role="alert">{errors.password}</p>}
         {errors.form&&<p className="form-error" role="alert">{errors.form}</p>}
         <Button type="submit" variant="primary" className="login-submit" disabled={submitting}>{submitting?'Signing in…':'Sign in to Orbit'} <ArrowRight size={17}/></Button>
-        <div className="demo-note"><strong>Admin access</strong><br/>Sign in with your dedicated Orbit admin email and password.</div>
+        <div className="demo-note"><strong>Admin access</strong><br/>Sign in with your dedicated Orbit admin email and password.<br/><a href="/subscriptions/">New customer? Explore plans and create an account.</a></div>
       </form>
       <small className="login-footer">One workspace. Every relationship.</small>
     </section>

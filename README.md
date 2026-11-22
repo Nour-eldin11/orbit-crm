@@ -49,7 +49,7 @@ The owner-only preview is available at [Orbit CRM](https://orbit-crm-workspace-a
 ## Component architecture
 
 - `app/` contains independent App Router pages and the static customer detail route.
-- `components/dashboard-shell.tsx` checks the simulated browser session before mounting the workspace.
+- `middleware.ts` checks the signed admin session before serving dashboard routes; `components/dashboard-shell.tsx` mounts the workspace.
 - `components/workspace.tsx` coordinates page state and shared chrome; feature views live in dedicated components such as `customer-views.tsx`, `deals-board.tsx`, `tasks-view.tsx`, `settings-view.tsx`, and `bonus-features.tsx`.
 - `components/ui/index.tsx` exports reusable buttons, inputs, cards, tables, badges, modal, dropdown, search bar, pagination, empty state and loading skeleton.
 - `lib/` holds typed mock customers, deals, tasks and preferences.
@@ -62,3 +62,17 @@ The application uses Next.js server routes and middleware for admin login. In Ve
 ## Verification
 
 Run `npm run typecheck` and `npm run build`. The build generates all core routes, the bonus routes, and twelve customer detail pages. Check desktop, tablet and phone widths in a browser.
+
+## SaaS subscriptions (setup in progress)
+
+The public `/subscriptions` page lets a customer compare Starter, Pro and Business, switch between monthly and yearly preview prices, create an account, and save a plan preference to an isolated workspace. It does not collect payment or activate paid features. The existing admin dashboard still uses sample CRM records and browser storage; plan selection alone does not convert that dashboard into a multi-tenant product.
+
+To enable account creation and saved choices:
+
+1. Create a Supabase project and run [`docs/database-schema.sql`](docs/database-schema.sql) once in its SQL editor. Review its RLS policies before accepting customer data.
+2. Set `SUPABASE_URL` and `SUPABASE_PUBLISHABLE_KEY` in Vercel for Production, Preview and Development as appropriate. Copy `.env.example` for local use. Do **not** expose a secret/service-role key to the browser or commit it.
+3. Configure Supabase Auth email confirmation and its Site URL for your domain. Deploy after adding the variables.
+4. Sign up on `/subscriptions`, confirm the email if required, sign in, then select a plan. Starter becomes active; Pro and Business are recorded as `selected` until real billing and entitlements are implemented.
+
+The dollar prices and feature limits are illustrative product copy in `lib/plans.ts`; they do not enforce quotas. Before selling subscriptions, set actual prices, add a payment provider with verified webhooks, apply entitlements, move all CRM data operations to tenant-scoped server APIs, and add token refresh/session expiry handling. No payment credentials are needed for this plan-selection stage.
+
