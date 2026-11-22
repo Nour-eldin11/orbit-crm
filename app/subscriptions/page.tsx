@@ -18,19 +18,19 @@ export default function SubscriptionsPage(){
   const [message,setMessage]=useState('');
   const [busy,setBusy]=useState(false);
   const [signedIn,setSignedIn]=useState(false);
-  useEffect(()=>{fetch('/api/subscription',{cache:'no-store'}).then(async response=>{
+  useEffect(()=>{try{const saved=localStorage.getItem('orbit-pending-plan');if(saved){const parsed=JSON.parse(saved);if(['starter','pro','business'].includes(parsed.plan)&&['monthly','yearly'].includes(parsed.cycle))setSelection(parsed)}}catch{}fetch('/api/subscription',{cache:'no-store'}).then(async response=>{
     if(response.ok){setSignedIn(true);setWorkspace((await response.json()).workspace)}
   }).catch(()=>{})},[]);
   async function choose(plan:PlanId,cycle:BillingCycle){
     setMessage('');setError('');
-    if(!signedIn||!workspace&&!name.trim()){setSelection({plan,cycle});return}
+    if(!signedIn||!workspace&&!name.trim()){setSelection({plan,cycle});localStorage.setItem('orbit-pending-plan',JSON.stringify({plan,cycle}));return}
     await save(plan,cycle);
   }
   async function save(plan:PlanId,cycle:BillingCycle){
     const response=await fetch('/api/subscription',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({plan,cycle,workspaceName:name.trim()})});
     const result=await response.json();
     if(!response.ok)throw new Error(result.error||'Could not save your choice.');
-    setWorkspace(result.workspace);setSelection(null);
+    setWorkspace(result.workspace);setSelection(null);localStorage.removeItem('orbit-pending-plan');
     setMessage(result.workspace.subscription_status==='active'?'Your Starter plan is active.':'Your plan choice is saved. No payment is collected at this time.');
   }
   async function submit(event:FormEvent<HTMLFormElement>){
