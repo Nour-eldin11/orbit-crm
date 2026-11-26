@@ -236,8 +236,8 @@ html[data-theme='dark'] body,html[data-palette='ocean'] body{background-color:va
 .nav-item:hover,.nav-item.active{background-color:color-mix(in srgb,var(--accent) 15%,transparent)}
 thead,.calendar-grid>strong{background:color-mix(in srgb,var(--accent-soft) 48%,transparent)}
 tbody tr:hover{background:color-mix(in srgb,var(--accent) 7%,transparent)}
-.calendar-day{background:rgb(var(--glass-tint) / calc(var(--glass-opacity) * .65))}
-.calendar-day.outside{background:rgb(var(--glass-tint) / calc(var(--glass-opacity) * .35))}
+.calendar-day{background:rgb(var(--glass-tint) / var(--glass-opacity))}
+.calendar-day.outside{background:color-mix(in srgb,rgb(var(--glass-tint) / var(--glass-opacity)) 60%,transparent)}
 .theme-option.theme-selected{border-color:var(--accent)}
 :is(.stat-card,.deal-card,.subscription-plan,.theme-option){transition:transform .2s ease,box-shadow .2s ease,border-color .2s ease}
 :is(.stat-card,.deal-card,.subscription-plan,.theme-option):hover{box-shadow:0 22px 52px color-mix(in srgb,var(--accent) 20%,transparent),inset 0 1px var(--glass-edge);border-color:color-mix(in srgb,var(--accent) 45%,var(--glass-edge))}
