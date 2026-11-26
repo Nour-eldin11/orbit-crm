@@ -174,58 +174,89 @@
 [data-palette=ocean] :is(.brand,.page-heading h1,.panel h2,.stat-main strong,.revenue-total,.pipeline-total,.settings-intro h2,.task-summary strong,.profile-fields label,.preference-toggle-row strong){color:#ecf7fc}
 @media(max-width:700px){.theme-options{grid-template-columns:repeat(2,minmax(0,1fr))}}
 
-/* Shared glass surfaces. Keep Orbit's existing palette and type scale. */
+/* Orbit liquid glass: one material system for every workspace surface. */
 :root{
-  --glass-surface:rgb(255 255 255 / 66%);
-  --glass-raised:rgb(255 255 255 / 78%);
-  --glass-field:rgb(255 255 255 / 46%);
-  --glass-line:rgb(255 255 255 / 72%);
-  --glass-shadow:0 12px 34px rgb(54 35 80 / 9%),inset 0 1px rgb(255 255 255 / 70%);
+  --glass-opacity:.585;
+  --glass-raised-opacity:.72;
+  --glass-blur:27px;
+  --glass-highlight-opacity:.206;
+  --glass-tint:255 255 255;
+  --glass-edge:rgb(255 255 255 / 78%);
+  --glass-shadow:0 18px 44px rgb(63 37 101 / 14%),inset 0 1px rgb(255 255 255 / 75%),inset 0 -1px rgb(255 255 255 / 26%);
 }
-html[data-theme='dark'],html[data-palette='ocean']{
-  --glass-surface:rgb(39 31 48 / 70%);
-  --glass-raised:rgb(48 38 59 / 82%);
-  --glass-field:rgb(55 43 65 / 62%);
-  --glass-line:rgb(255 255 255 / 12%);
-  --glass-shadow:0 14px 38px rgb(0 0 0 / 24%),inset 0 1px rgb(255 255 255 / 8%);
+html[data-theme='dark']{
+  --glass-tint:37 30 48;
+  --glass-edge:rgb(255 255 255 / 18%);
+  --glass-shadow:0 20px 48px rgb(0 0 0 / 27%),inset 0 1px rgb(255 255 255 / 14%);
 }
-html[data-palette='ocean']{
-  --glass-surface:rgb(23 44 61 / 72%);
-  --glass-raised:rgb(32 57 76 / 84%);
-  --glass-field:rgb(32 57 76 / 62%);
-}
-body,.subscription-public-page{
+html[data-palette='ocean']{--glass-tint:22 43 59;--glass-edge:rgb(144 221 236 / 22%)}
+body{
   background-color:var(--bg);
-  background-image:radial-gradient(circle at 85% 6%,color-mix(in srgb,var(--accent) 16%,transparent),transparent 34%),radial-gradient(circle at 12% 82%,color-mix(in srgb,var(--accent) 10%,transparent),transparent 37%);
+  background-image:
+    radial-gradient(ellipse 52% 43% at 88% 9%,color-mix(in srgb,var(--accent) 29%,transparent),transparent 78%),
+    radial-gradient(ellipse 42% 39% at 5% 82%,rgb(142 208 210 / 25%),transparent 78%),
+    radial-gradient(ellipse 35% 35% at 56% 58%,rgb(231 174 218 / 17%),transparent 78%),
+    linear-gradient(135deg,var(--bg),color-mix(in srgb,var(--accent) 9%,var(--bg)));
   background-attachment:fixed;
 }
+html[data-theme='dark'] body,html[data-palette='ocean'] body{background-color:var(--bg);color:var(--ink)}
 .login-page{background:transparent}
-.login-story{background:color-mix(in srgb,var(--accent-soft) 79%,transparent)}
-:is(.sidebar,.topbar,.panel,.stat-card,.kanban-column,.deal-card,.task-summary,.extra-chart,.notification-panel,.modal,.palette,.tour-card,.theme-option,.login-form-area,.subscription-account-banner,.subscription-signup,.goal-card,.workspace-switch){
-  background:var(--glass-surface);
-  border-color:var(--glass-line);
+.login-story{background:color-mix(in srgb,var(--accent-soft) 68%,transparent)}
+/* Primary frosted layers: shared cards, navigation, dialogs and login. */
+:is(.sidebar,.topbar,.panel,.stat-card,.kanban-column,.deal-card,.task-summary,.extra-chart,.notification-panel,.modal,.palette,.tour-card,.theme-option,.login-form-area,.art-stat,.goal-card,.workspace-switch,.subscription-plan,.subscription-account-banner,.subscription-signup){
+  background-color:rgb(var(--glass-tint) / var(--glass-opacity));
+  background-image:linear-gradient(135deg,rgb(255 255 255 / var(--glass-highlight-opacity)),transparent 42%,color-mix(in srgb,var(--accent) 5%,transparent) 100%);
+  border:1px solid var(--glass-edge);
   box-shadow:var(--glass-shadow);
-  -webkit-backdrop-filter:blur(20px) saturate(150%);
-  backdrop-filter:blur(20px) saturate(150%);
+  -webkit-backdrop-filter:blur(var(--glass-blur)) saturate(180%);
+  backdrop-filter:blur(var(--glass-blur)) saturate(180%);
 }
-:is(.topbar,.sidebar,.modal,.palette,.tour-card,.notification-panel){background:var(--glass-raised)}
-:is(html[data-theme='dark'],html[data-palette='ocean']) :is(.sidebar,.topbar,.panel,.stat-card,.kanban-column,.deal-card,.task-summary,.extra-chart,.notification-panel,.modal,.palette,.tour-card,.theme-option,.login-form-area,.subscription-account-banner,.subscription-signup,.goal-card,.workspace-switch){
-  background:var(--glass-surface);
-  border-color:var(--glass-line);
+:is(.panel,.stat-card,.deal-card,.task-summary,.extra-chart,.kanban-column,.theme-option,.workspace-switch,.goal-card,.art-stat,.subscription-plan,.subscription-signup){border-radius:16px}
+:is(.sidebar,.topbar,.modal,.palette,.tour-card,.notification-panel){
+  background-color:rgb(var(--glass-tint) / var(--glass-raised-opacity));
 }
-:is(html[data-theme='dark'],html[data-palette='ocean']) :is(.topbar,.sidebar,.modal,.palette,.tour-card,.notification-panel){background:var(--glass-raised)}
-:is(.secondary,.customer-search,.billing-switch,.subscription-signup input,.profile-fields input,.modal input,.modal select,.panel select,.detail-card textarea,.advanced-filter-strip input,.filter-date input,.theme-preview){
-  background-color:var(--glass-field);
-  border-color:var(--glass-line);
-  -webkit-backdrop-filter:blur(10px);
-  backdrop-filter:blur(10px);
+:is(html[data-theme='dark'],html[data-palette='ocean']) :is(.sidebar,.topbar,.panel,.stat-card,.kanban-column,.deal-card,.task-summary,.extra-chart,.notification-panel,.modal,.palette,.tour-card,.theme-option,.login-form-area,.art-stat,.goal-card,.workspace-switch,.subscription-plan,.subscription-account-banner,.subscription-signup){
+  background-color:rgb(var(--glass-tint) / var(--glass-opacity));
+  border-color:var(--glass-edge);
 }
-:is(html[data-theme='dark'],html[data-palette='ocean']) :is(.secondary,.customer-search,.billing-switch,.subscription-signup input,.profile-fields input,.modal input,.modal select,.panel select,.detail-card textarea,.advanced-filter-strip input,.filter-date input){background-color:var(--glass-field);border-color:var(--glass-line)}
-thead{background:color-mix(in srgb,var(--accent-soft) 46%,transparent)}
-tbody tr:hover{background:color-mix(in srgb,var(--accent) 5%,transparent)}
+:is(html[data-theme='dark'],html[data-palette='ocean']) :is(.sidebar,.topbar,.modal,.palette,.tour-card,.notification-panel){background-color:rgb(var(--glass-tint) / var(--glass-raised-opacity))}
+.sidebar{border-radius:0 20px 20px 0}
+[dir=rtl] .sidebar{border-radius:20px 0 0 20px}
+.topbar{border-radius:0 0 18px 18px}
+.modal-backdrop,.palette-backdrop,.tour-backdrop{-webkit-backdrop-filter:blur(12px);backdrop-filter:blur(12px)}
+/* Controls use a slightly denser version of the same material. */
+:is(.secondary,.customer-search,.billing-switch,.profile-fields input,.modal input,.modal select,.panel select,.detail-card textarea,.advanced-filter-strip input,.filter-date input,.theme-preview,.subscription-signup input){
+  background-color:rgb(var(--glass-tint) / var(--glass-raised-opacity));
+  border-color:var(--glass-edge);
+  -webkit-backdrop-filter:blur(12px);
+  backdrop-filter:blur(12px);
+}
+:is(html[data-theme='dark'],html[data-palette='ocean']) :is(.secondary,.customer-search,.billing-switch,.profile-fields input,.modal input,.modal select,.panel select,.detail-card textarea,.advanced-filter-strip input,.filter-date input,.subscription-signup input){background-color:rgb(var(--glass-tint) / var(--glass-raised-opacity));border-color:var(--glass-edge)}
+:is(.nav-item,.secondary,.primary,.customer-search,.detail-button,.page-buttons button){border-radius:11px}
+.nav-item:hover,.nav-item.active{background-color:color-mix(in srgb,var(--accent) 15%,transparent)}
+thead,.calendar-grid>strong{background:color-mix(in srgb,var(--accent-soft) 48%,transparent)}
+tbody tr:hover{background:color-mix(in srgb,var(--accent) 7%,transparent)}
+.calendar-day{background:rgb(var(--glass-tint) / calc(var(--glass-opacity) * .65))}
+.calendar-day.outside{background:rgb(var(--glass-tint) / calc(var(--glass-opacity) * .35))}
+.theme-option.theme-selected{border-color:var(--accent)}
 :is(.stat-card,.deal-card,.subscription-plan,.theme-option){transition:transform .2s ease,box-shadow .2s ease,border-color .2s ease}
-:is(.stat-card,.deal-card,.subscription-plan,.theme-option):hover{transform:translateY(-2px);box-shadow:0 16px 38px color-mix(in srgb,var(--accent) 13%,transparent),inset 0 1px var(--glass-line)}
-@supports not (backdrop-filter:blur(1px)){
-  :is(.sidebar,.topbar,.panel,.stat-card,.kanban-column,.deal-card,.task-summary,.extra-chart,.notification-panel,.modal,.palette,.tour-card,.theme-option,.login-form-area,.subscription-account-banner,.subscription-signup,.goal-card,.workspace-switch){background:var(--glass-raised)}
-}
+:is(.stat-card,.deal-card,.subscription-plan,.theme-option):hover{box-shadow:0 22px 52px color-mix(in srgb,var(--accent) 20%,transparent),inset 0 1px var(--glass-edge);border-color:color-mix(in srgb,var(--accent) 45%,var(--glass-edge))}
+/* Live glass control in Appearance. */
+.glass-control{margin:22px 0 12px;padding:18px;border:1px solid var(--glass-edge);border-radius:16px;background:color-mix(in srgb,var(--accent) 7%,transparent)}
+.glass-control-heading{display:flex;justify-content:space-between;align-items:center;gap:16px}
+.glass-control h3{font-size:14px;margin:0 0 6px;color:var(--ink)}
+.glass-control p{font-size:12px;line-height:1.5;color:var(--muted);margin:0}
+.glass-control output{font-size:14px;font-weight:700;color:var(--accent);background:var(--accent-soft);border-radius:9px;padding:7px 10px;white-space:nowrap}
+.glass-control-body{display:flex;align-items:center;gap:22px;margin-top:17px}
+.glass-preview{position:relative;flex:0 0 125px;height:88px;overflow:hidden;border-radius:13px;background:linear-gradient(120deg,#9e8bdc,#e5a0c7 55%,#92c5d7)}
+.glass-preview-orb{position:absolute;width:70px;height:70px;right:-10px;top:-16px;border-radius:50%;background:#f9d3e7;filter:blur(5px)}
+.glass-preview-card{position:absolute;inset:15px 25px 13px 15px;border-radius:11px;border:1px solid rgb(255 255 255 / 78%);background:rgb(255 255 255 / var(--glass-opacity));box-shadow:0 7px 20px rgb(59 30 90 / 18%);-webkit-backdrop-filter:blur(var(--glass-blur)) saturate(180%);backdrop-filter:blur(var(--glass-blur)) saturate(180%);padding:11px}
+.glass-preview-card i,.glass-preview-card span{display:block;height:6px;border-radius:8px;background:rgb(113 81 154 / 48%);margin-bottom:7px}
+.glass-preview-card i{width:15px;height:15px;border-radius:5px}
+.glass-preview-card span:last-child{width:55%}
+.glass-range-wrap{flex:1;min-width:0}
+.glass-range-wrap input{width:100%;height:24px;cursor:pointer;accent-color:var(--accent)}
+.glass-range-labels{display:flex;justify-content:space-between;gap:10px;font-size:11px;color:var(--muted);margin-top:5px}
+@media(max-width:620px){.glass-control-body{gap:12px}.glass-preview{flex-basis:88px;height:78px}.glass-control{padding:14px}}
+@supports not (backdrop-filter:blur(1px)){:is(.sidebar,.topbar,.panel,.stat-card,.kanban-column,.deal-card,.task-summary,.extra-chart,.notification-panel,.modal,.palette,.tour-card,.theme-option,.login-form-area,.art-stat,.goal-card,.workspace-switch){background-color:rgb(var(--glass-tint) / 92%)}}
 @media(prefers-reduced-motion:reduce){:is(.stat-card,.deal-card,.subscription-plan,.theme-option){transition:none}}
