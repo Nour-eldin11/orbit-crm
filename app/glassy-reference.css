@@ -94,6 +94,15 @@ thead,.calendar-grid>strong{background:rgb(var(--glass-card) / 34%)}
 .calendar-day.chosen{background:color-mix(in srgb,var(--accent-soft) 68%,transparent)}
 tbody tr:hover{background:rgb(var(--glass-card) / 18%)}
 .notification-panel,.modal,.palette,.tour-card{background-color:rgb(var(--glass-card) / var(--glass-raised-opacity))}
+.notification-panel{
+  background:#f8f5fc;
+  background-image:none;
+  box-shadow:0 24px 56px rgb(31 21 48 / 30%),inset 0 1px var(--glass-inset);
+  -webkit-backdrop-filter:none;
+  backdrop-filter:none;
+}
+html[data-theme='dark'] .notification-panel{background:#241c32}
+html[data-palette='ocean'] .notification-panel{background:#183246}
 .subscription-public-page{background:transparent}
 .subscription-public-shell{background:rgb(var(--glass-stage) / var(--glass-stage-opacity));border:1.5px solid var(--glass-rim);border-radius:30px;margin:24px auto;box-shadow:0 28px 70px var(--glass-depth);-webkit-backdrop-filter:blur(var(--glass-blur));backdrop-filter:blur(var(--glass-blur))}
 .login-page{padding:24px;gap:20px;background:transparent}
