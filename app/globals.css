@@ -173,3 +173,59 @@
 [data-palette=ocean] :is(input,select,textarea,.secondary,.customer-search,.profile-fields input,.modal input,.modal select,.panel select){background-color:#20394c;color:var(--ink);border-color:var(--border)}
 [data-palette=ocean] :is(.brand,.page-heading h1,.panel h2,.stat-main strong,.revenue-total,.pipeline-total,.settings-intro h2,.task-summary strong,.profile-fields label,.preference-toggle-row strong){color:#ecf7fc}
 @media(max-width:700px){.theme-options{grid-template-columns:repeat(2,minmax(0,1fr))}}
+
+/* Shared glass surfaces. Keep Orbit's existing palette and type scale. */
+:root{
+  --glass-surface:rgb(255 255 255 / 66%);
+  --glass-raised:rgb(255 255 255 / 78%);
+  --glass-field:rgb(255 255 255 / 46%);
+  --glass-line:rgb(255 255 255 / 72%);
+  --glass-shadow:0 12px 34px rgb(54 35 80 / 9%),inset 0 1px rgb(255 255 255 / 70%);
+}
+html[data-theme='dark'],html[data-palette='ocean']{
+  --glass-surface:rgb(39 31 48 / 70%);
+  --glass-raised:rgb(48 38 59 / 82%);
+  --glass-field:rgb(55 43 65 / 62%);
+  --glass-line:rgb(255 255 255 / 12%);
+  --glass-shadow:0 14px 38px rgb(0 0 0 / 24%),inset 0 1px rgb(255 255 255 / 8%);
+}
+html[data-palette='ocean']{
+  --glass-surface:rgb(23 44 61 / 72%);
+  --glass-raised:rgb(32 57 76 / 84%);
+  --glass-field:rgb(32 57 76 / 62%);
+}
+body,.subscription-public-page{
+  background-color:var(--bg);
+  background-image:radial-gradient(circle at 85% 6%,color-mix(in srgb,var(--accent) 16%,transparent),transparent 34%),radial-gradient(circle at 12% 82%,color-mix(in srgb,var(--accent) 10%,transparent),transparent 37%);
+  background-attachment:fixed;
+}
+.login-page{background:transparent}
+.login-story{background:color-mix(in srgb,var(--accent-soft) 79%,transparent)}
+:is(.sidebar,.topbar,.panel,.stat-card,.kanban-column,.deal-card,.task-summary,.extra-chart,.notification-panel,.modal,.palette,.tour-card,.theme-option,.login-form-area,.subscription-account-banner,.subscription-signup,.goal-card,.workspace-switch){
+  background:var(--glass-surface);
+  border-color:var(--glass-line);
+  box-shadow:var(--glass-shadow);
+  -webkit-backdrop-filter:blur(20px) saturate(150%);
+  backdrop-filter:blur(20px) saturate(150%);
+}
+:is(.topbar,.sidebar,.modal,.palette,.tour-card,.notification-panel){background:var(--glass-raised)}
+:is(html[data-theme='dark'],html[data-palette='ocean']) :is(.sidebar,.topbar,.panel,.stat-card,.kanban-column,.deal-card,.task-summary,.extra-chart,.notification-panel,.modal,.palette,.tour-card,.theme-option,.login-form-area,.subscription-account-banner,.subscription-signup,.goal-card,.workspace-switch){
+  background:var(--glass-surface);
+  border-color:var(--glass-line);
+}
+:is(html[data-theme='dark'],html[data-palette='ocean']) :is(.topbar,.sidebar,.modal,.palette,.tour-card,.notification-panel){background:var(--glass-raised)}
+:is(.secondary,.customer-search,.billing-switch,.subscription-signup input,.profile-fields input,.modal input,.modal select,.panel select,.detail-card textarea,.advanced-filter-strip input,.filter-date input,.theme-preview){
+  background-color:var(--glass-field);
+  border-color:var(--glass-line);
+  -webkit-backdrop-filter:blur(10px);
+  backdrop-filter:blur(10px);
+}
+:is(html[data-theme='dark'],html[data-palette='ocean']) :is(.secondary,.customer-search,.billing-switch,.subscription-signup input,.profile-fields input,.modal input,.modal select,.panel select,.detail-card textarea,.advanced-filter-strip input,.filter-date input){background-color:var(--glass-field);border-color:var(--glass-line)}
+thead{background:color-mix(in srgb,var(--accent-soft) 46%,transparent)}
+tbody tr:hover{background:color-mix(in srgb,var(--accent) 5%,transparent)}
+:is(.stat-card,.deal-card,.subscription-plan,.theme-option){transition:transform .2s ease,box-shadow .2s ease,border-color .2s ease}
+:is(.stat-card,.deal-card,.subscription-plan,.theme-option):hover{transform:translateY(-2px);box-shadow:0 16px 38px color-mix(in srgb,var(--accent) 13%,transparent),inset 0 1px var(--glass-line)}
+@supports not (backdrop-filter:blur(1px)){
+  :is(.sidebar,.topbar,.panel,.stat-card,.kanban-column,.deal-card,.task-summary,.extra-chart,.notification-panel,.modal,.palette,.tour-card,.theme-option,.login-form-area,.subscription-account-banner,.subscription-signup,.goal-card,.workspace-switch){background:var(--glass-raised)}
+}
+@media(prefers-reduced-motion:reduce){:is(.stat-card,.deal-card,.subscription-plan,.theme-option){transition:none}}
