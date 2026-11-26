@@ -64,6 +64,7 @@ html[data-theme='dark'] body::after,html[data-palette='ocean'] body::after{opaci
   -webkit-backdrop-filter:blur(var(--glass-blur)) saturate(175%);
   backdrop-filter:blur(var(--glass-blur)) saturate(175%);
 }
+.main-shell > .topbar{z-index:50}
 html[data-theme='dark'] :is(.sidebar,.topbar),html[data-palette='ocean'] :is(.sidebar,.topbar){background-color:rgb(var(--glass-stage) / var(--glass-sidebar-opacity));border-color:var(--glass-rim)}
 .content{position:relative;z-index:1;padding-top:30px}
 :is(.panel,.stat-card,.kanban-column,.deal-card,.task-summary,.extra-chart,.notification-panel,.modal,.palette,.tour-card,.theme-option,.goal-card,.workspace-switch,.subscription-plan,.subscription-account-banner,.subscription-signup,.art-stat){
