@@ -2,8 +2,8 @@
 :root{
   --glass-stage:248 242 252;
   --glass-card:255 255 255;
-  --glass-stage-opacity:.56;
-  --glass-sidebar-opacity:.66;
+  --glass-stage-opacity:.459;
+  --glass-sidebar-opacity:.546;
   --glass-strength:70%;
   --glass-rim:rgb(255 255 255 / 84%);
   --glass-inset:rgb(255 255 255 / 65%);
